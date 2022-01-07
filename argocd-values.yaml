@@ -1,0 +1,59 @@
+configs: 
+  secret: 
+    argocdServerAdminPassword: $2a$10$a7RnWZ0QgruIRTt57S4cj.laCibNx/V4tCbt33PpJIGFNp5sBOqSi #secret1234
+global:
+  additionalLabels:
+    app.kubernetes.io/managed-by: Helm
+    meta.helm.sh/release-name: argocd
+    meta.helm.sh/release-namespace: default
+server:
+  extraArgs:
+    - --insecure # Added this to server argocd-server on non-ssl port
+  additionalApplications:  
+    - name: zookeeper-prod
+      destination: 
+        namespace: fid-demo-prod
+        server: "https://kubernetes.default.svc"
+      project: default
+      source: 
+        chart: zookeeper
+        repoURL: "https://radiantlogic-devops.github.io/helm"
+        targetRevision: "0.1.1"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true 
+        automated: 
+          prune: true
+          selfHeal: true
+    - name: fid-prod
+      destination: 
+        namespace: fid-demo-prod
+        server: "https://kubernetes.default.svc"
+      project: default
+      source: 
+        chart: fid
+        helm: 
+          parameters: 
+            - 
+              name: fid.license
+              value: "PASTE_LICENSE_HERE"
+            - 
+              name: fid.rootPassword
+              value: secret1234
+            - 
+              name: zk.connectionString
+              value: "zookeeper-prod.fid-demo-prod.svc.cluster.local:2181"
+            - 
+              name: zk.ruok
+              value: "http://zookeeper-prod.fid-demo-prod.svc.cluster.local:8080/commands/ruok"
+            - 
+              name: service.type
+              value: ClusterIP
+        repoURL: "https://radiantlogic-devops.github.io/helm"
+        targetRevision: "0.1.1"
+      syncPolicy:
+        syncOptions:
+          - CreateNamespace=true 
+        automated: 
+          prune: true
+          selfHeal: true
