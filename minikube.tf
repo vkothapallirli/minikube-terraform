@@ -5,7 +5,7 @@ resource "null_resource" "minikube" {
   }
 
   provisioner "local-exec" {
-    command = "minikube start --memory=${var.minikube_node_memory} --cpus=${var.minikube_node_cpus} --driver=${var.minikube_driver} --nodes=${var.minikube_nodes} --disk-size=${var.minikube_node_disk_size} --profile=${var.minikube_cluster_name} --addons=metallb --addons=metrics-server"
+    command = "minikube start --memory=${var.minikube_node_memory} --cpus=${var.minikube_node_cpus} --driver=${var.minikube_driver} --nodes=${var.minikube_nodes} --disk-size=${var.minikube_node_disk_size} --container-runtime=${var.minikube_container_runtime} --profile=${var.minikube_cluster_name} --addons=metallb --addons=metrics-server"
   }
 
 
