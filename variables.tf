@@ -22,6 +22,10 @@ variable "minikube_node_disk_size" {
   default = "20g"
 }
 
+variable "minikube_container_runtime" {
+  default = "containerd"
+}
+
 variable "argocd" {
   default     = false
   description = "If argocd is enabled FID and Zookeeper deployment is handled by argocd. FID or ZK helm arguments have to be modified in argocd-values.yaml but not in terraform variables"
@@ -77,5 +81,5 @@ variable "fid_service_type" {
 }
 
 variable "fid_license" {
-   sensitive = true
+  sensitive = true
 }

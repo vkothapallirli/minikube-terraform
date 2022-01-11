@@ -11,6 +11,7 @@ Default workspace variables
 |VARIBLE|DESCRIPTION|DEFAUL VALUE|
 |---|---|---|
 |minikube_cluster_name|Name of the minikube cluster profile|`minikube-terraform`|
+|minikube_container_runtime|Kubernetes container runtime available `docker`,`cri-o`|`containerd`|
 |minikube_nodes|Number of nodes minikube cluster can have|`2`| 
 |minikube_driver|Driver to be used to create minikube cluster|`hyperv`|
 |minikube_node_memory|Memory for each minikube node in MB|`4192`|
